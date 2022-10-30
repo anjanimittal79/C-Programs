@@ -1,0 +1,122 @@
+//Stack using Arrays
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+//Structure for stack
+
+typedef struct stack
+{
+    int capacity;
+    int top;
+    int *arr; //dec of array
+}Stack;
+
+//Function to initialize the stack
+Stack* initializeStack(int capacity)
+{
+    Stack *st=(Stack*)malloc(sizeof(Stack));
+    st->capacity=capacity;
+    st->top=-1;
+    st->arr=(int*)malloc(sizeof(int)*capacity);
+    return st;
+}
+
+//Function to return the size of the Stack
+int size(Stack *st)
+{
+    return st->top+1;
+}
+
+//Function to check whether the stack is empty or not
+int isEmpty(Stack *st)
+{
+    return st->top==-1; //return answer in T/F
+}
+
+//Function to check if stack is full or not
+int isFull(Stack *st)
+{
+    return st->top+1==st->capacity;
+}
+
+//Functionto push an element inside the Stack
+void push(Stack *st, int data)
+{
+    //check if stack is full
+    if(isFull(st))
+    {
+        printf("Stack overflow\n");
+        return;
+    }
+    
+    st->top += 1;
+    st->arr[st->top]=data;
+}
+
+//Function to return the top element
+
+int peek(Stack *st)
+{
+    if(isEmpty(st))
+    {
+        printf("Stack is Empty\n");
+        return -1;
+    }
+    return st->arr[st->top];
+}
+
+//Function to pop the top element
+int pop(Stack *st)
+{
+    int ele;
+    if(isEmpty(st))
+    {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+    ele=st->arr[st->top];
+    st->top -= 1;
+    return ele;
+}
+
+int main()
+{
+    int capacity,n,i,ele;
+    clrscr();
+    printf("enter capacity and number of elements to be inserted:");
+    scanf("%d %d",&capacity,&n);
+    Stack *st=initializeStack(capacity);
+    printf("enter elements to be inserted:\n");
+    for(i=0; i<n; i++)
+    {
+	scanf("%d",&ele);
+	push(st,ele);
+    }
+
+    printf("Element at the top of the stack:%d\n",peek(st));
+    printf("Size of the stack:%d\n",size(st));
+
+    if(isEmpty(st))
+    printf("Stack is empty\n");
+    else
+    printf("Stack is not empty\n");
+
+    printf("Popping all the elements:\n");
+
+    for(i=0; i<n; i++)
+    {
+	printf("%d\t",pop(st));
+    }
+    printf("\n");
+
+     printf("Size of the stack after popping:%d\n",size(st));
+
+    if(isEmpty(st))
+    printf("Stack is empty after popping\n");
+    else
+    printf("Stack is not empty after popping\n");
+
+    getch();
+    return 0;
+}
